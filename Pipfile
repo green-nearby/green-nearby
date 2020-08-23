@@ -9,6 +9,8 @@ verify_ssl = true
 requests = "*"
 click = "*"
 dash = "*"
+fastapi = "*"
+uvicorn = "*"
 
 [requires]
 python_version = "3.7"

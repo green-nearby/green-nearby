@@ -35,37 +35,63 @@ def get_lat_long(address):
 
 
 # TODO: data class maybe?
-def format_greenspace_response(payload):
+def format_greenspace_response(park_payload, poi_payload):
     """
     formats the return of the source API to structured data
     :param payload: results
     :return:
     """
     result_list = []
-    for doc in payload:
-        response = {
+    for doc in park_payload:
+        park_response = {
             "name" : doc["name"],
             "lat" : doc["geometry"]["location"]["lat"],
             "long": doc["geometry"]["location"]["lng"],
-            "vincinity" : doc["vicinity"],
-            "types": doc["types"]
         }
-        result_list.append(response)
+        park_name = doc["name"]
+        # checking for duplicate entries
+        existing_parks = [result["name"] for result in result_list]
+        if park_name not in existing_parks:
+            # only add a park if it's name does not exist in the list already
+            result_list.append(park_response)
+    for doc in poi_payload:
+        poi_response = {
+            "name": doc["name"],
+            "lat": doc["geometry"]["location"]["lat"],
+            "long": doc["geometry"]["location"]["lng"],
+        }
+        poi_name = doc["name"]
+        print(poi_name)
+        # checking for nearby Playground in POI
+        if "Playground" in poi_name or "Park" in poi_name:
+            # checking for duplicate entries
+            existing_parks = [result["name"] for result in result_list]
+            if poi_name not in existing_parks:
+                # only add a park if it's name does not exist in the list already
+                result_list.append(poi_response)
     return result_list
 
 
 def get_nearby_greenspace(latitude, longitude):
     #https://maps.googleapis.com/maps/api/place/findplacefromtext/output?parameters
     URL = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json"
-    parameters = {
+    park_parameters = {
         "location": f"{latitude},{longitude}",
         "rankby": "distance",
         "type": "park",
         "key": os.environ["GOOGLE_API_KEY"],
     }
-    response = requests.get(URL, parameters)
-    json_response = json.loads(response.text)
-    results = format_greenspace_response(json_response["results"])
+    park_response = requests.get(URL, park_parameters)
+    park_json_response = json.loads(park_response.text)
+    poi_parameters = {
+        "location": f"{latitude},{longitude}",
+        "rankby": "distance",
+        "type": "point_of_interest",
+        "key": os.environ["GOOGLE_API_KEY"],
+    }
+    poi_response = requests.get(URL, poi_parameters)
+    poi_json_response = json.loads(poi_response.text)
+    results = format_greenspace_response(park_json_response["results"], poi_json_response["results"])
     return results
 
 
