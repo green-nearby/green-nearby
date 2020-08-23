@@ -8,6 +8,8 @@ verify_ssl = true
 [packages]
 requests = "*"
 click = "*"
+fastapi = "*"
+uvicorn = "*"
 
 [requires]
 python_version = "3.7"
