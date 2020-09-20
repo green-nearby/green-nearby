@@ -16,7 +16,7 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 px.set_mapbox_access_token(os.environ["MAPBOX_TOKEN"])
 
-#
+# loading default map of boston instead of scatter plot
 load_df = pd.DataFrame([["Boston", 42.3554, 71.0640]], columns=list('ABC'))
 load_fig = px.scatter_mapbox(load_df, text="A", lat="B", lon="C", zoom=14)
 
