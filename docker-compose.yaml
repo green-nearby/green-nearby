@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  api:
+    image: green-nearby/api
+    environment:
+      - GOOGLE_API_KEY
+    ports:
+      - 8080:80
+  frontend:
+    image: green-nearby/frontend
+    environment:
+      - MAPBOX_TOKEN
+    ports:
+      - 8000:8000

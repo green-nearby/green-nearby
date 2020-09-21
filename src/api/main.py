@@ -1,7 +1,7 @@
 from typing import Optional
 from fastapi import FastAPI
 from pydantic import BaseModel
-from  .greenspace import get_lat_long, get_nearby_greenspace
+from greenspace import get_lat_long, get_nearby_greenspace
 import logging
 
 app = FastAPI()
