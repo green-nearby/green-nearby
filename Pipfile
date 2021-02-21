@@ -8,8 +8,10 @@ verify_ssl = true
 [packages]
 requests = "*"
 click = "*"
+dash = "*"
 fastapi = "*"
 uvicorn = "*"
+pandas = "*"
 
 [requires]
 python_version = "3.7"

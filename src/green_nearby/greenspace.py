@@ -61,7 +61,6 @@ def format_greenspace_response(park_payload, poi_payload):
             "long": doc["geometry"]["location"]["lng"],
         }
         poi_name = doc["name"]
-        print(poi_name)
         # checking for nearby Playground in POI
         if "Playground" in poi_name or "Park" in poi_name:
             # checking for duplicate entries
