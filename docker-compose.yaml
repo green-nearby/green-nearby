@@ -1,0 +1,11 @@
+services:
+  app:
+    build:
+      context: .
+    image: green-nearby
+    environment:
+      - GOOGLE_API_KEY
+      - MAPBOX_TOKEN
+      - GREENSPACE_API=http://localhost:8000/greenspace
+    ports:
+      - 8000:8000
