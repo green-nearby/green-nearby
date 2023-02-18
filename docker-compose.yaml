@@ -1,0 +1,18 @@
+services:
+  api:
+    build:
+      context: .
+    image: green-nearby
+    command: uvicorn api:app --host 0.0.0.0 --port 8000
+    environment:
+      - GOOGLE_API_KEY
+    ports:
+      - 8000:8000
+  app:
+    image: green-nearby
+      #command: python src/green_nearby/app.py
+    command: gunicorn src.green_nearby.app:app --host 0.0.0.0 --port 8050
+    environment:
+      - MAPBOX_TOKEN
+    ports:
+      - 8050:8050
