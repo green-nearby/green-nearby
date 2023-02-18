@@ -1,6 +1,5 @@
 import json
 import os
-from pprint import pprint as print
 
 import click
 import requests
@@ -19,7 +18,6 @@ def get_lat_long(address):
     }
     response = requests.get(URL, parameters)
     json_response = json.loads(response.text)
-    print(response.text)
     try:
         latitude = json_response['results'][0]['geometry']['location']['lat']
     except:
